@@ -30,9 +30,10 @@
 #' 
 
 
-scoring_spat_ensemble <- function(fc_dir, target_dir, scores_dir){
+scoring_spat_ensemble <- function(fc_dir, target, scores_dir){
   ## pull most recent target raster
-  target_rast <- rast(last(sort(dir_ls(paste0(target_dir, '/')))))
+  #last(sort(dir_ls(paste0(target_dir, '/'))))
+  target_rast <- rast(target, vsi=TRUE)
   
   ## read in forecast as raster
   fc <- rast(dir_ls(paste0(fc_dir, '/')))
@@ -49,9 +50,9 @@ scoring_spat_ensemble <- function(fc_dir, target_dir, scores_dir){
   dat_bootstrap <- apply(dat, 2, FUN = na_bootstrap_fun)
   
   ## compute crps and log score from ensemble
-  crps_ensemble <- crps_sample(y = y, dat = dat_bootstrap)
+  crps_ensemble <- scoringRules::crps_sample(y = y, dat = dat_bootstrap)
   crps_ensemble[mask] <- NA
-  logs_ensemble <- logs_sample(y = y, dat = dat_bootstrap)
+  logs_ensemble <- scoringRules::logs_sample(y = y, dat = dat_bootstrap)
   logs_ensemble[mask] <- NA
   
   ## convert scores to raster
@@ -63,8 +64,12 @@ scoring_spat_ensemble <- function(fc_dir, target_dir, scores_dir){
   dir.create(scores_dir, FALSE)
   
   ## write tif files for crps and log scores
-  writeRaster(crps_scores, filename = paste0(scores_dir, '/crps_scores.tif'))
-  writeRaster(logs_scores, filename = paste0(scores_dir, '/logs_scores.tif'))
+  terra::writeRaster(crps_scores, 
+                     filename = paste0(scores_dir, '/crps_scores.tif'),
+                     overwrite=TRUE)
+  terra::writeRaster(logs_scores, 
+                     filename = paste0(scores_dir, '/logs_scores.tif'),
+                     overwrite=TRUE)
   
   return(scores_dir)
 }

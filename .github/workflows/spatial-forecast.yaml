@@ -28,4 +28,4 @@ jobs:
       - name: Run example
         shell: Rscript {0}
         run: |
-          source("spatial_forecast_example.R")
+          quarto::quarto_render("spatial_forecast_example.qmd")

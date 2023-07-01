@@ -1,0 +1,6 @@
+Sys.setenv("CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE"="YES") 
+Sys.setenv("AWS_S3_ENDPOINT"="data.ecoforecast.org")
+Sys.setenv("AWS_VIRTUAL_HOSTING"="FALSE")
+Sys.setenv("AWS_ACCESS_KEY_ID"=Sys.getenv("EFI_KEY"))
+Sys.setenv("AWS_SECRET_ACCESS_KEY"=Sys.getenv("EFI_SECRET"))
+Sys.setenv("RENV_CONFIG_SANDBOX_ENABLED" = FALSE)

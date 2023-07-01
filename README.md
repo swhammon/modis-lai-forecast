@@ -3,6 +3,9 @@ project team: John Smith, David Durden,  Emma Mendelsohn, Carl Boettiger
 
 This repo holds code for a spatially explicit forecasting challenge pipeline to benchmark spatial models using MODIS leaf index data. In this example we focus on locations of wildfire burns and recovery.
 
+- 🗺️ **[Example notebook](https://cboettig.github.io/modis-lai-forecast/spatial_forecast_example.html)**
+- :octocat: [source](https://github.com/cboettig/modis-lai-forecast/blob/main/spatial_forecast_example.qmd)
+
 ## Workflow overview
 ![efi-spatial (3)](https://github.com/eco4cast/modis-lai-forecast/assets/16726030/8e9b7eb5-62ca-4a7f-9df1-a5c09bd569b2)
 

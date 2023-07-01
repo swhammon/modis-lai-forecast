@@ -19,18 +19,29 @@
 #'                                           dir = 'targets',
 #'                                           mask = fire_box$maskLayer)
 
-create_target_file <- function(cuberast, date, dir, mask = NULL){
-  ## write geotif file
-  dir.create(dir, FALSE)
-  #if statement to mask data in burn area
-  if(!is.null(mask)){
-    #Data masked
-    cuberast %>% gdalcubes::select_time(date) %>% gdalcubes::filter_geom(geom = mask, srs = "EPSG:4326") %>% write_tif(dir = dir)
-    
+create_target_file <- function(cuberast, date, dir=NULL, mask = NULL){
+  
+  target <- cuberast %>%
+    gdalcubes::slice_time(date) 
+  
+  if (!is.null(mask)) {
+    target <- target %>%
+      gdalcubes::filter_geom(geom = mask,
+                             srs = "EPSG:4326")
   }
-  else{
-    #data not masked
-  cuberast %>% gdalcubes::select_time(date) %>% write_tif(dir = dir)
-  } #end if statement to mask data to burn area
-  return(dir)
+
+  if (!is.null(dir)) {
+    
+    # needed to write geotif to VSI
+    Sys.setenv("CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE"="YES") 
+    
+    # doesn't take VSI yet; so convert to stars first instead:
+    # write_tif(target, dir, "lai_recovery_target_") 
+    
+    target %>% 
+      stars::st_as_stars() %>%
+      write_stars(glue::glue("{dir}/lai_recovery-target-{date}.tif"))
+  }
+  
+  invisible(target)
 }
