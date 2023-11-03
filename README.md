@@ -1,5 +1,5 @@
 # modis-lai-forecast
-project team: John Smith, David Durden,  Emma Mendelsohn, Carl Boettiger
+project team: John Smith, David Durden,  Emma Mendelsohn, Carl Boettiger, EFI Cyberinfrastructure and Methods and Tools working groups
 
 This repo holds code for a spatially explicit forecasting challenge pipeline to benchmark spatial models using MODIS leaf index data. In this example we focus on locations of wildfire burns and recovery.
 
