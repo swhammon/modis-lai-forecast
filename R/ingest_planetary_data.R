@@ -33,7 +33,7 @@ ingest_planetary_data <- function(start_date,
   
   # get STACItemCollection
   matches <-
-    stac("https://planetarycomputer.microsoft.com/api/stac/v1") |>
+    rstac::stac("https://planetarycomputer.microsoft.com/api/stac/v1") |>
     stac_search(collections = collection,
                 datetime = paste(start_date, end_date, sep = "/"),
                 bbox = c(box)) |>
@@ -47,7 +47,7 @@ ingest_planetary_data <- function(start_date,
                                            duration = "start")
   
   # set dimensions of the cube
-  v <- cube_view(srs = srs, #lat/lon
+  v <- gdalcubes::cube_view(srs = srs, #lat/lon
                  extent = list(t0 = as.character(start_date), t1 = as.character(end_date),
                                left = box[1], right = box[3],
                                top = box[4], bottom = box[2]),
@@ -55,6 +55,6 @@ ingest_planetary_data <- function(start_date,
                  aggregation = aggregation, resampling = resampling)
   
   # create proxy data cube
-  proxy_cube <- raster_cube(cube, v)
+  proxy_cube <- gdalcubes::raster_cube(cube, v)
   return(proxy_cube)
 }

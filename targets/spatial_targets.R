@@ -8,14 +8,23 @@
 #'
 #' @examples spat4cast_submit(dir = "targets", site_id = "august_complex")
 
-print(paste0("Running Creating Terrestrial Targets at ", Sys.time()))
 
-spatial_targets <- function(dir = "targets", site_id = "august_complex){
+
+spatial_targets <- function(
+    dir = "targets", 
+    site_id = c("august_complex")[1],
+    dx = 0.1,
+    dy = 0.1
+    )
+{
+
+print(paste0("Running Creating Terrestrial Targets at ", Sys.time()))
 
 library(here)
 library(sf)
 library(lubridate)
 library(gdalcubes)
+library(rstac)
 
 
 #Source functions
@@ -35,8 +44,8 @@ raster_cube <- ingest_planetary_data(start_date = date - months(2),
                                      end_date = date + months(1), 
                                      box = fire_box$bbox,
                                      srs = "EPSG:4326",
-                                     dx = 0.1, 
-                                     dy = 0.1, 
+                                     dx = dx, 
+                                     dy = dy, 
                                      dt = "P30D",
                                      collection = "modis-15A2H-061",
                                      asset_name = "Lai_500m")
