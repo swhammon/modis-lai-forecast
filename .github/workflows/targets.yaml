@@ -4,9 +4,8 @@ on:
   schedule:
   - cron: '0 1 1 * *' # runs on first of month
 workflow_dispatch:
-  
-  
-  name: target-generation
+
+name: target-generation
 
 jobs:
   docker:
@@ -18,14 +17,14 @@ AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 container: rocker/geospatial:latest
 steps:
   - uses: actions/checkout@v3
-- name: system deps
-run: sudo apt-get update && sudo apt-get -y install cargo
-- name: Install packages from renv.lock (with cache)
-uses: r-lib/actions/setup-renv@v2
-with:
-  cache-version: 3
+  - name: system deps
+    run: sudo apt-get update && sudo apt-get -y install cargo
+  - name: Install packages from renv.lock (with cache)
+    uses: r-lib/actions/setup-renv@v2
+    with:
+      cache-version: 3
 
-- name: Run example
-shell: Rscript {0}
-run: |
-  source("targets/spatial_targets.R")
+  - name: Run example
+    shell: Rscript {0}
+    run: |
+      source("targets/spatial_targets.R")
