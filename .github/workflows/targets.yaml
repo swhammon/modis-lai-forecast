@@ -11,10 +11,6 @@ name: targets
 jobs:
   docker:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     container: rocker/geospatial:latest
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +22,7 @@ jobs:
         with:
           cache-version: 3
       
-      - name: 
+      - name: install quarto
         shell: Rscript {0}
         run: install.packages("quarto")
         
@@ -34,3 +30,7 @@ jobs:
         shell: Rscript {0}
         run: |
           source("targets/spatial_targets.R")
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
