@@ -2,29 +2,35 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   schedule:
-  - cron: '0 1 1 * *' # runs on first of month
-workflow_dispatch:
+    - cron: '0 1 1 * *' # runs on first of month
+  workflow_dispatch:
 
-name: target-generation
+
+name: targets
 
 jobs:
   docker:
-  runs-on: ubuntu-latest
-env:
-  GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-container: rocker/geospatial:latest
-steps:
-  - uses: actions/checkout@v3
-  - name: system deps
-    run: sudo apt-get update && sudo apt-get -y install cargo
-  - name: Install packages from renv.lock (with cache)
-    uses: r-lib/actions/setup-renv@v2
-    with:
-      cache-version: 3
-
-  - name: Run example
-    shell: Rscript {0}
-    run: |
-      source("targets/spatial_targets.R")
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    container: rocker/geospatial:latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: system deps
+        run: sudo apt-get update && sudo apt-get -y install cargo
+        
+      - name: Install packages from renv.lock (with cache)
+        uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 3
+      
+      - name: 
+        shell: Rscript {0}
+        run: install.packages("quarto")
+        
+      - name: build targets
+        shell: Rscript {0}
+        run: |
+          source("targets/spatial_targets.R")
