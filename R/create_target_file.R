@@ -27,7 +27,10 @@ create_target_file <- function(
     site_id = c("august_complex")[1],
     date,
     dir=tempdir(), 
-    mask = NULL)
+    mask = NULL,
+    dt = "PM1",
+    var = "LAI_modis"
+)
   {
   
   #Grab just the time period desired
@@ -70,7 +73,7 @@ create_target_file <- function(
   
   
   #Bucket output
-  out <- glue::glue("{bucket}/{site_id}/{date}")
+  out <- glue::glue("{bucket}/{dt}/{var}/{site_id}")
   
   #Copy target file from output directory to target bucket
   minioclient::mc_cp(from = fileOut, out)

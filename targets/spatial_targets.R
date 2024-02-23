@@ -13,6 +13,7 @@
 spatial_targets <- function(
     dir = "targets", 
     site_id = c("august_complex")[1],
+    dt = "P1M",
     dx = 0.1,
     dy = 0.1
     )
@@ -47,7 +48,7 @@ raster_cube <- ingest_planetary_data(start_date = date - months(1),
                                      srs = "EPSG:4326",
                                      dx = dx, 
                                      dy = dy, 
-                                     dt = "P30D",
+                                     dt = dt,
                                      collection = "modis-15A2H-061",
                                      asset_name = "Lai_500m")
 
@@ -59,7 +60,9 @@ raster_cube <- ingest_planetary_data(start_date = date - months(1),
                                date = as.character(date),
                              dir = tempdir(),
                              bucket = "efi/spat4cast-targets",
-                             mask = fire_box$maskLayer)
+                             mask = fire_box$maskLayer,
+                             dt = dt,
+                             var = "LAI_modis")
                              
                              
 } #End of function
