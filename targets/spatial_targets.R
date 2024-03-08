@@ -48,8 +48,8 @@ readRenviron(".Renviron")
 target <- create_target_file(cuberast = raster_cube,
                              site_id = site_id,
                              date = as.character(start_date),
-                             dir = tempdir(),
-                             bucket = "efi/spat4cast-targets",
+                             dir = "/vsis3/spat4cast-targets",
+                             bucket = NULL,
                              mask = fire_box$maskLayer,
                              dt = dt,
                              var = "LAI_modis")

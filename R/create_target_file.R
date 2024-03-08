@@ -53,36 +53,15 @@ create_target_file <- function(
     # needed to write geotif to VSI
     Sys.setenv("CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE"="YES") 
   
+    out <- glue::glue("{dir}/{dt}/{var}/{site_id}/lai_recovery-target-{date}.tif")
     
-    #file out
-    fileOut <- glue::glue("{dir}/lai_recovery-target-{date}.tif")
-      
     # doesn't take VSI yet; so convert to stars first instead:
     # write_tif(target, dir, "lai_recovery_target_") 
     
     target %>% 
       stars::st_as_stars() %>%
-      stars::write_stars(fileOut)
+      stars::write_stars(out)
   }
-  
-  
-  #Write output
-  if (!is.null(bucket)){
-  #Minioclient alias information
-  minioclient::mc_alias_set(alias = "efi", 
-                            endpoint = "data.ecoforecast.org", 
-                            access_key = Sys.getenv("AWS_ACCESS_KEY_ID"), 
-                            secret_key = Sys.getenv("AWS_SECRET_ACCESS_KEY"))
-  
-  
-  #Bucket output
-  tif <- basename(fileOut)
-  out <- glue::glue("{bucket}/{dt}/{var}/{site_id}/{tif}")
-  
-  #Copy target file from output directory to target bucket
-  minioclient::mc_cp(fileOut, out)
-  }#End if bucket available
-  
   #return target
-  invisible(target)
+  invisible(out)
 }
