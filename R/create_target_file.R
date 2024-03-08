@@ -6,6 +6,8 @@
 #' @param date character; date to create target geotiff for
 #' @param mask sf object; optional, mask polygon to use
 #' @param bucket output bucket
+#' @param dt timestep
+#' @param var variable name
 #' @return character; target raster
 #' @examples 
 #' # Bounding box ------------------------------------------------------------
@@ -28,6 +30,7 @@ create_target_file <- function(
     date,
     dir=tempdir(), 
     mask = NULL,
+    bucket = NULL,
     dt = "PM1",
     var = "LAI_modis"
 )
