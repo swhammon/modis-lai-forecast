@@ -1219,7 +1219,7 @@
     },
     "minioclient": {
       "Package": "minioclient",
-      "Version": "0.0.5",
+      "Version": "0.0.6",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1229,8 +1229,7 @@
         "processx",
         "tools",
         "utils"
-      ],
-      "Hash": "9171f4e6af6ef50143fd1a8829d81cc5"
+      ]
     },
     "modelr": {
       "Package": "modelr",
