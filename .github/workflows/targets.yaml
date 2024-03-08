@@ -11,7 +11,7 @@ name: targets
 jobs:
   docker:
     runs-on: ubuntu-latest
-    container: rocker/geospatial:latest
+    container: rocker/geospatial:dev-osgeo
     steps:
       - uses: actions/checkout@v3
       - name: system deps
