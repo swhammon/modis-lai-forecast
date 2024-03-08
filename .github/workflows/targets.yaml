@@ -22,9 +22,9 @@ jobs:
         with:
           cache-version: 3
       
-      - name: install quarto
+      - name: restore renv
         shell: Rscript {0}
-        run: install.packages("quarto")
+        run: renv::restore()
         
       - name: build targets
         shell: Rscript {0}
