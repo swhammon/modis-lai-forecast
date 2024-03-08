@@ -17,14 +17,13 @@ jobs:
       - name: system deps
         run: sudo apt-get update && sudo apt-get -y install cargo
         
-      - name: Install packages from renv.lock (with cache)
-        uses: r-lib/actions/setup-renv@v2
-        with:
-          cache-version: 3
+#      - name: Install packages from renv.lock (with cache)
+#        uses: r-lib/actions/setup-renv@v2
+#        with:
+#          cache-version: 3
       
-      - name: install quarto
-        shell: Rscript {0}
-        run: install.packages("quarto")
+      - name: install R packages
+        run: install2.r minioclient here glue rstac gdalcubes
         
       - name: build targets
         shell: Rscript {0}

@@ -43,7 +43,7 @@ raster_cube <- ingest_planetary_data(start_date = start_date,
                                      asset_name = "Lai_500m")
 
 
-
+readRenviron(".Renviron")
 # create target file
 target <- create_target_file(cuberast = raster_cube,
                              site_id = site_id,
