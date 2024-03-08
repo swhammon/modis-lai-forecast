@@ -23,7 +23,7 @@ jobs:
 #          cache-version: 3
       
       - name: install R packages
-        run: install2.r minioclient here glue
+        run: install2.r minioclient here glue rstac
         
       - name: build targets
         shell: Rscript {0}
