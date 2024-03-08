@@ -25,13 +25,15 @@ fire_box <- fire_bbox(fire = site_id, pad_box = TRUE)
 
 #Target date
 date <- lubridate::floor_date(as.Date(Sys.time()), "month") #first day of the month
+start_date <- date - months(1)
+end_date <- lubridate::ceiling_date(start_date, "month") - days(1) #first day of the month
 
 # Ingest data ------------------------------------------------------------
 gdalcubes::gdalcubes_options(parallel=TRUE)
 
 # use ingest_planetary_data function to extract raster cube for fire bounding box between Jan 1 2002 and July 1 2023.
-raster_cube <- ingest_planetary_data(start_date = date - months(1), 
-                                     end_date = date, 
+raster_cube <- ingest_planetary_data(start_date = start_date, 
+                                     end_date = end_date, 
                                      box = fire_box$bbox,
                                      srs = "EPSG:4326",
                                      dx = dx, 
@@ -45,7 +47,7 @@ raster_cube <- ingest_planetary_data(start_date = date - months(1),
 # create target file
 target <- create_target_file(cuberast = raster_cube,
                              site_id = site_id,
-                             date = as.character(date),
+                             date = as.character(start_date),
                              dir = tempdir(),
                              bucket = "efi/spat4cast-targets",
                              mask = fire_box$maskLayer,

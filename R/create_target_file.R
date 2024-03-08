@@ -76,10 +76,11 @@ create_target_file <- function(
   
   
   #Bucket output
-  out <- glue::glue("{bucket}/{dt}/{var}/{site_id}")
+  tif <- basename(fileOut)
+  out <- glue::glue("{bucket}/{dt}/{var}/{site_id}/{tif}")
   
   #Copy target file from output directory to target bucket
-  minioclient::mc_cp(from = fileOut, out)
+  minioclient::mc_cp(fileOut, out)
   }#End if bucket available
   
   #return target
