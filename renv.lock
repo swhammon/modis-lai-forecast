@@ -441,7 +441,7 @@
     },
     "curl": {
       "Package": "curl",
-      "Version": "5.1.0",
+      "Version": "6.0.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
