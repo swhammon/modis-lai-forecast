@@ -17,18 +17,16 @@ We will demonstrate the work that we've done using an example of a post burn are
 fire_box <- fire_bbox(fire = "august_complex", pad_box = TRUE)
 ```
 
-First, we need to ingest our data. We do this by interfacing with the Microsoft Planetary Computer's STAC Catalog using the function `ingest_planetary_data()`. We specify a start date, end date, and a bounding box.  
+First, we need to ingest our data. We do this by interfacing with the Microsoft Planetary Computer's STAC Catalog using the function `ingest_planetary_data()`. We specify a start date, end date, and a bounding box.
 
-Optionally, we can also specify the desired spatial and temporal resolution for the challenge.  Importantly, these choices are independent of the original resolution of our chosen MODIS Leaf-Area Index product (also configurable), reflecting whatever the appropriate spatial and temporal scales are to probe the focal ecological processes. Here we choose a 30 day interval on a 0.1 degree grid resolution (nearly 1 km resolution), which is about half the resolution of the underlying 500m, 16 day MODIS LAI product. Averaging over the original data helps both focus the challenge on the longer-term trends of recovery after disturbance rather than smaller-scale fluctuations. It can also make the data easier to work with. All the same, this resolution may be too coarse for many smaller fire events.
-
-
+Optionally, we can also specify the desired spatial and temporal resolution for the challenge. Importantly, these choices are independent of the original resolution of our chosen MODIS Leaf-Area Index product (also configurable), reflecting whatever the appropriate spatial and temporal scales are to probe the focal ecological processes. Here we choose a 30 day interval on a 0.1 degree grid resolution (nearly 1 km resolution), which is about half the resolution of the underlying 500m, 16 day MODIS LAI product. Averaging over the original data helps both focus the challenge on the longer-term trends of recovery after disturbance rather than smaller-scale fluctuations. It can also make the data easier to work with. All the same, this resolution may be too coarse for many smaller fire events.
 
 ```{r}
 # Ingest data ------------------------------------------------------------
 gdalcubes::gdalcubes_options(parallel=TRUE)
 
 # use ingest_planetary_data function to extract raster cube for fire bounding box between Jan 1 2002 and July 1 2023.
-raster_cube <- ingest_planetary_data(start_date = "2002-01-01", 
+raster_cube <- ingest_planetary_data(start_date = "2023-05-01", 
                                      end_date = "2023-07-01", 
                                      box = fire_box$bbox,
                                      srs = "EPSG:4326",
@@ -40,7 +38,6 @@ raster_cube <- ingest_planetary_data(start_date = "2002-01-01",
 ```
 
 Next, we want to generate and store a target file to evaluate our (eventual) forecast. We can do this using the function `create_target_file().`
-
 
 ```{r}
 # create target file
